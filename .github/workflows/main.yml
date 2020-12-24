@@ -25,5 +25,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
         - name: Clean temp directory
-          run: "PS " + $(get-location) + "> " 
-          working-directory: C:\Program Files\Unity\Editor
+          run: 
+            ECHO Building...
+            "C:\Program Files\Unity\Editor\Unity.exe" -projectPath "C:\GitRepo\CICDTestProject" -batchmode -nographics -quit
+            ECHO "Build Completed"
+            ECHO "Compressing Build"
