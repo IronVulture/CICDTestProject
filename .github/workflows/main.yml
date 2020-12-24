@@ -19,7 +19,7 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics -logFile -buildWindows64Player=/BuilderFolder/Win64/TestProject.exe - 
+        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics -logFile -buildWindows64Player BuilderFolder/Win64/TestProject.exe - 
     
     - name: Print github workspace
       run: echo $GITHUB_WORKSPACE
