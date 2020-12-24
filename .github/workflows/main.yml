@@ -22,6 +22,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Run a multi-line script
-        run: C:\Program Files\Unity\Editor\Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget $PLATFORM -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build
+       - name: build
+         run: |
+           cd C:\Program Files\Unity\Editor
+           Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build
+         shell: sh
+
+        
         
