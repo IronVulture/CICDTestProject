@@ -37,10 +37,11 @@ jobs:
     steps:
     - name: SteamDeploy
       shell: cmd
-      run: |
-          ${{STEAMCMD}} login ${{STEAMUSERNAME}} ${{STEAMPASSWORD} run_app_build ${{STEAMSCRIPT}}
       env:
         STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
         STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
         STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
         STEAMSCRIPT: BuildScript\Steam\app_build_968770.vdf
+      run: |
+          $STEAMCMD login $STEAMUSERNAME $STEAMPASSWORD run_app_build $STEAMSCRIPT
+      
