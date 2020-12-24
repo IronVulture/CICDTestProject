@@ -25,8 +25,5 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
         - name: Clean temp directory
-          run: 
-            ECHO Building...
-            "C:\Program Files\Unity\Editor\Unity.exe" -batchmode -logFile - -projectPath="C:\GitRepo\CICDTestProject" -buildTarget Win64 -quit -buildWindows64Player=Build/OOneUnityTools.exe"
-            ECHO "Build Completed"
-            ECHO "Compressing Build"
+          run: "C:\Program Files\Unity\Editor\Unity.exe" -batchmode -logFile - -projectPath="C:\GitRepo\CICDTestProject" -buildTarget Win64 -quit -buildWindows64Player=Build/OOneUnityTools.exe"
+  
