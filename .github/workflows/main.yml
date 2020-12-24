@@ -41,8 +41,7 @@ jobs:
         STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
         STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
         STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
-        STEAMSCRIPT: $GITHUB_WORKSPACE\BuildScript\Steam\app_build_968770.vdf
+        STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
       run: |
-          echo ${{evn.STEAMSCRIPT}}
-          ${{env.STEAMCMD}} login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} run_app_build ${{env.STEAMSCRIPT}}
+          echo ${{evn.STEAMSCRIPT}} ${{env.STEAMCMD}} login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} run_app_build ${{env.STEAMSCRIPT}}
       
