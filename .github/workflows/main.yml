@@ -3,7 +3,7 @@
 name: CI
 
 env:
-  path: C:\
+  path: .\
 
 # Controls when the action will run. 
 on:
