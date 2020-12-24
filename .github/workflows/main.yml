@@ -6,15 +6,26 @@ on:
   workflow_dispatch:
   
 jobs:
-  UnityTest:
+  Checkout:
     runs-on: self-hosted
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       with:
         clean: false
-
+  
+  RemoveOldBuilds:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: /${{github.workspace}}/Build
+  
+  UnityTest:
+    runs-on: self-hosted
+    
+    steps:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
