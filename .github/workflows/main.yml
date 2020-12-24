@@ -3,7 +3,7 @@
 name: CI
 
 env:
-  path: ./
+  path: C:\Program Files\Unity\Editor
 
 # Controls when the action will run. 
 on:
