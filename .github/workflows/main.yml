@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  build:
+  UnityTest:
     runs-on: self-hosted
 
     steps:
@@ -25,14 +25,17 @@ jobs:
       run: |
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -  
       
+  Win64Build:
+    runs-on: self-hosted
 
+    steps:
     - name: Unity Build
       shell: cmd
       run: |
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.Build -logFile -  
 
   deploy:
-    needs: [build]
+    needs: [Win64Build]
     runs-on: self-hosted
     steps:
     - name: SteamDeploy
