@@ -4,11 +4,7 @@ on:
   push:
     branches: [ master ]
   workflow_dispatch:
-env:
-  STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
-  STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
-  STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
-  STEAMSCRIPT: $GITHUB_WORKSPACE\BuildScript\Steam\app_build_968770.vdf
+  
 jobs:
   build:
     runs-on: self-hosted
@@ -41,6 +37,11 @@ jobs:
     steps:
     - name: SteamDeploy
       shell: cmd
+      env:
+        STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
+        STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
+        STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
+        STEAMSCRIPT: $GITHUB_WORKSPACE\BuildScript\Steam\app_build_968770.vdf
       run: |
           echo ${{evn.STEAMSCRIPT}}
           ${{env.STEAMCMD}} login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} run_app_build ${{env.STEAMSCRIPT}}
