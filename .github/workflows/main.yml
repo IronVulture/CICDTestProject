@@ -4,7 +4,11 @@ on:
   push:
     branches: [ master ]
   workflow_dispatch:
-
+env:
+  STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
+  STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
+  STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
+  STEAMSCRIPT: BuildScript\Steam\app_build_968770.vdf
 jobs:
   build:
     runs-on: self-hosted
@@ -31,3 +35,11 @@ jobs:
       run: |
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.Build -logFile -  
 
+  deploy:
+    needs: [build]
+    runs-on: self-hosted
+    steps:
+    - name: SteamDeploy
+      shell: cmd
+      run: |
+          $STEAMCMD +login $STEAMUSERNAME $STEAMPASSWORD +run_app_build $STEAMSCRIPT
