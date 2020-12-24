@@ -12,7 +12,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+  Path: C:\Program Files\Unity\Editor
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -26,7 +27,8 @@ jobs:
           run: |
            cd\
            cd C:\Program Files\Unity\Editor
-           Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build       
+           Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build  
+           working-directory: 'C:\Program Files\Unity\Editor'
         
 
         
