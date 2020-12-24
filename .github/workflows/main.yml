@@ -43,5 +43,4 @@ jobs:
         STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
         STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
       run: |
-          ${{env.STEAMCMD}} login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} + run_app_build ${{env.STEAMSCRIPT}} + quit
-      
+          ${{env.STEAMCMD}} + login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} + run_app_build ${{env.STEAMSCRIPT}} + quit     
