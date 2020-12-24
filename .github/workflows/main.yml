@@ -17,4 +17,4 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor" -quit -batchmode -projectPath . -executeMethod CI.Build -buildTarget Android -setDefaultPlatformTextureFormat astc -nographics -logFile -
+        "C:\Program Files\Unity\Editor" -quit -batchmode -projectPath .  -buildTarget Win64  -nographics -logFile -
