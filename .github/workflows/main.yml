@@ -12,8 +12,7 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-env:
-  Path: C:\Program Files\Unity\Editor
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -25,7 +24,7 @@ jobs:
     steps:
         - name: Clean install dependencies and build
           run: |
-           Unity.exe -batchmode -logFile - -projectPat -buildTarget 'win64' -quit -buildWindows64Player=C:\build
+           Unity.exe -batchmode -logFile -buildTarget 'win64' -quit -buildWindows64Player=C:\build
            working-directory: 'C:\Program Files\Unity\Editor'
         
 
