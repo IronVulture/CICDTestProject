@@ -19,4 +19,5 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe" -projectPath . -quit -batchmode -projectPath .  -buildTarget Win64  -nographics -logFile -
+        "C:\Program Files\Unity\Editor\Unity.exe" -projectPath . -quit -batchmode -projectPath .  -buildTarget Win64  -nographics -logFile - -buildWindows64Player= /build
+    
