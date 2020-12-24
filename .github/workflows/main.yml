@@ -32,7 +32,18 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.Build -logFile -  
+        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+        
+        
+        
+  NSBuild:
+    runs-on: self-hosted
+
+    steps:
+    - name: Unity Build
+      shell: cmd
+      run: |
+        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -
 
   deploy:
     needs: [Win64Build]
