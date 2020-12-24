@@ -27,4 +27,4 @@ jobs:
         - name: Clean temp directory
           shell: cmd
           run: |
-            "&"C:\Program Files\Unity\Editor\Unity.exe" -quit -batchmode -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -nographics -logFile -
+            &"C:\Program Files\Unity\Editor\Unity.exe" -quit -batchmode -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -nographics -logFile -
