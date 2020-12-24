@@ -3,7 +3,7 @@
 name: CI
 
 env:
-  path: .\
+  path: ./
 
 # Controls when the action will run. 
 on:
@@ -27,3 +27,4 @@ jobs:
     steps:
         - name: Clean temp directory
           run: echo ${env:path}
+          working-directory: ${env:path}
