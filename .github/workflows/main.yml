@@ -23,8 +23,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
         - name: Clean install dependencies and build
-          run: Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build       
-          working-directory: C:\Program Files\Unity\Editor
+          run: bats C:\Program Files\Unity\Editor\Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build       
+        
 
         
         
