@@ -25,7 +25,7 @@ jobs:
     steps:
         - name: Clean install dependencies and build
           run: |
-           Unity.exe -batchmode -logFile -projectPath=C:\GitRepo\CICDTestProject -quit -runEditorTests
+           Unity.exe -batchmode - -logFile -projectPath=C:\GitRepo\CICDTestProject -quit -runEditorTests
            working-directory: 'C:\Program Files\Unity\Editor'
         
 
