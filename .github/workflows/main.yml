@@ -14,7 +14,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         clean: false
-        path: /BuilderFolder
         
 
     - name: Unity Build
@@ -22,3 +21,5 @@ jobs:
       run: |
         "C:\Program Files\Unity\Editor\Unity.exe" -projectPath . -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics -logFile - -buildWindows64Player=./BuilderFolder/build/TestProject.exe
     
+    - name: Print github workspace
+      run: echo $GITHUB_WORKSPACE
