@@ -24,7 +24,9 @@ jobs:
         path: ${{github.workspace}}/Build
   
   UnityTest:
-    runs-on: self-hosted    
+    runs-on: self-hosted
+    strategy:
+      fail-fast: true    
     steps:
     - name: Unity Play Mode Test
       shell: cmd
