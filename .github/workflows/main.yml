@@ -45,7 +45,7 @@ jobs:
       run: |
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -
 
-  deploy:
+  SteamDeploy:
     needs: [Win64Build, NSBuild, UnityTest]
     runs-on: self-hosted
     steps:
@@ -59,7 +59,8 @@ jobs:
       run: |
         ${{env.STEAMCMD}} +login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
 
-  update_release_draft:
+  UpdateReleaseDraft:
+    needs: [SteamDeploy]
     runs-on: Ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
