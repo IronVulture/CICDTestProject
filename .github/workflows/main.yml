@@ -16,6 +16,7 @@ jobs:
   
   RemoveOldBuilds:
     runs-on: self-hosted
+    needs: [Checkout]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -23,8 +24,7 @@ jobs:
         path: /${{github.workspace}}/Build
   
   UnityTest:
-    runs-on: self-hosted
-    
+    runs-on: self-hosted    
     steps:
     - name: Unity Play Mode Test
       shell: cmd
@@ -37,8 +37,8 @@ jobs:
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -  
       
   Win64Build:
+    needs: [RemoveOldBuilds]
     runs-on: self-hosted
-
     steps:
     - name: Unity Build
       shell: cmd
@@ -48,8 +48,8 @@ jobs:
         
         
   NSBuild:
+    needs: [RemoveOldBuilds]
     runs-on: self-hosted
-
     steps:
     - name: Unity Build
       shell: cmd
