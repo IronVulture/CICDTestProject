@@ -25,6 +25,7 @@ jobs:
   
   UnityTest:
     runs-on: self-hosted
+    needs: [Checkout]
     strategy:
       fail-fast: true    
     steps:
@@ -39,7 +40,7 @@ jobs:
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -  
       
   Win64Build:
-    needs: [RemoveOldBuilds]
+    needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
     steps:
     - name: Unity Build
@@ -50,7 +51,7 @@ jobs:
         
         
   NSBuild:
-    needs: [RemoveOldBuilds]
+    needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
     steps:
     - name: Unity Build
