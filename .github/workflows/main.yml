@@ -25,4 +25,4 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
         - name: Clean temp directory
-          run: '&"C:\Program Files\Unity\Editor\Unity.exe" -quit -batchmode -projectPath=C:\GitRepo\CICDTestProject  -logFile -buildTarget Win64'
+          run: &"C:\Program Files\Unity\Editor\Unity.exe" -quit -batchmode -projectPath=C:\GitRepo\CICDTestProject  -logFile -buildTarget Win64
