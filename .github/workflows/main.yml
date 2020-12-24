@@ -8,7 +8,7 @@ env:
   STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
   STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
   STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
-  STEAMSCRIPT: ${{GITHUB_WORKSPACE}}\BuildScript\Steam\app_build_968770.vdf
+  STEAMSCRIPT: $GITHUB_WORKSPACE\BuildScript\Steam\app_build_968770.vdf
 jobs:
   build:
     runs-on: self-hosted
