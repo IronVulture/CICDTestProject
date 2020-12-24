@@ -46,7 +46,7 @@ jobs:
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -
 
   deploy:
-    needs: [Win64Build]
+    needs: [Win64Build, NSBuild]
     runs-on: self-hosted
     steps:
     - name: SteamDeploy
