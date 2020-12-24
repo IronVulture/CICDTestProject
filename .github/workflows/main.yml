@@ -25,5 +25,5 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
         - name: Clean temp directory
-          run: Unity.exe -batchmode -logFile 
+          run: C:\Program Files\Unity\Editor\Unity.exe -batchmode -logFile 
           working-directory: C:\Program Files\Unity\Editor
