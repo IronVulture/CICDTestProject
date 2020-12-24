@@ -27,6 +27,6 @@ jobs:
         - name: Clean temp directory
           run: 
             ECHO Building...
-            "C:\Program Files\Unity\Editor\Unity.exe" -projectPath "C:\GitRepo\CICDTestProject" -buildTarget 'win64' -batchmode -nographics -quit -buildWindows64Player= ""C:\"
+            "C:\Program Files\Unity\Editor\Unity.exe" -projectPath "C:\GitRepo\CICDTestProject" -buildTarget 'win64' -batchmode -nographics -quit -buildWindows64Player= "C:\"
             ECHO "Build Completed"
             ECHO "Compressing Build"
