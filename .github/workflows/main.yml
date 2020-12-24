@@ -25,7 +25,7 @@ jobs:
         - name: Clean install dependencies and build
           run: |
            cd\
-           cd C:\ProgramFiles\Unity\Editor
+           cd C:\Program Files\Unity\Editor
            Unity.exe -batchmode -logFile - -projectPath=C:\GitRepo\CICDTestProject -buildTarget Win64 -quit -buildWindows64Player=C:\GitRepo\CICDTestProject\Build       
         
 
