@@ -59,10 +59,10 @@ jobs:
           
   DiscordNotify:
     runs-on: ubuntu-latest
+    if: ${{ failure() || cancelled()}}
     needs: [UnityTest, Win64Build, NSBuild]
     steps:
       - uses: sarisia/actions-status-discord@v1
-        if: failure() || skipped()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
           
