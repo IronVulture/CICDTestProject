@@ -16,6 +16,8 @@ jobs:
   # This workflow contains a single job called "build"
   UpdateReleaseDraft:
     runs-on: Ubuntu-latest
+    outputs:
+     tagname: ${{ steps.step1.outputs.tag_name }}
     steps:
       - id: step1
         uses: release-drafter/release-drafter@v5.12.1
