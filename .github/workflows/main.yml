@@ -76,7 +76,10 @@ jobs:
   UpdateReleaseDraft:
     needs: [SteamDeploy]
     runs-on: Ubuntu-latest
+    outputs:
+      tagname: ${{ steps.step1.outputs.tag_name }}
     steps:
+      - id: step1
       - uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -89,3 +92,10 @@ jobs:
         if: always()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
+          
+  TagNameDisplay:
+      runs-on: self-hosted
+      needs: [UpdateReleaseDraft]
+      steps:
+      - name: DisplayTag
+        run: echo ${{ needs.UpdateReleaseDraft.outputs.tagname }}
