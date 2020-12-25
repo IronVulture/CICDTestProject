@@ -61,7 +61,6 @@ jobs:
           
   DiscordNotify:
     runs-on: ubuntu-latest
-    needs: [NSBuild,Win64Build,UnityTest]
     steps:
       - uses: sarisia/actions-status-discord@v1
         if: ${{ failure() }}
