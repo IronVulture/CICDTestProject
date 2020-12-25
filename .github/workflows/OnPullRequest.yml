@@ -1,7 +1,9 @@
 name: PullRequestCheck
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - develop
   
 jobs:
   Checkout:
