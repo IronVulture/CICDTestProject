@@ -62,10 +62,9 @@ jobs:
     if: ${{ failure() || cancelled()}}
     needs: [UnityTest, Win64Build, NSBuild]
     steps:
-      - uses: rjstone/discord-webhook-notify@v1
+      - uses: sarisia/actions-status-discord@v1
         with:
-            severity: error
-            details: RP check Failed!
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK}}
+          status: Failure
           
 
