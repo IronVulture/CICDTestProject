@@ -32,12 +32,14 @@ jobs:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
+        "C:\Program Files\Unity\Editor\Unity.exe"  -batchmode -projectPath=/BuilderFolder -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
     
     - name: Unity Editor Mode Test
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -  
+        "C:\Program Files\Unity\Editor\Unity.exe"  -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -
+        
+                                                  
       
   Win64Build:
     needs: [RemoveOldBuilds, UnityTest]
