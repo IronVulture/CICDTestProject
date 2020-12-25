@@ -97,5 +97,4 @@ jobs:
       runs-on: self-hosted
       needs: [UpdateReleaseDraft]
       steps:
-      - name: DisplayTag
-        run: echo ${{ needs.UpdateReleaseDraft.outputs.tagname }}
+      - run: echo ${{ needs.UpdateReleaseDraft.outputs.tagname }}
