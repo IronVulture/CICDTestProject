@@ -39,7 +39,7 @@ jobs:
           
   DiscordNotify:
     runs-on: ubuntu-latest
-    needs: [SteamDeploy]
+    needs: [SteamDeploy, UpdateReleaseDraft]
     steps:
       - uses: sarisia/actions-status-discord@v1
         if: always()
