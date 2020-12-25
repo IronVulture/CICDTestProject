@@ -24,8 +24,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-  TagNameDisplay:
+  SteamDeploy:
     runs-on: self-hosted
-    needs: [UpdateReleaseDraft]
     steps:
-    - run: echo ${{ needs.UpdateReleaseDraft.outputs.tagname }}
+    - name: SteamDeploy
+      shell: cmd
+      env:
+        STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
+        STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
+        STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
+        STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
+      run: |
+        ${{env.STEAMCMD}} +login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
+          
+  DiscordNotify:
+    runs-on: ubuntu-latest
+    needs: [SteamDeploy]
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK}}
