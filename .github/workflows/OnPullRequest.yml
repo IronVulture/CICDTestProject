@@ -55,19 +55,8 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -
-          
-  DiscordNotify_Fail:
-    runs-on: ubuntu-latest
-    if: ${{ failure() || cancelled()}}
-    needs: [UnityTest, Win64Build, NSBuild]
-    steps:
-      - uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK}}
-          status: Failure
-  
-  
+        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -          
+    
   Atomerge:
     runs-on: ubuntu-latest
     needs: [UnityTest, Win64Build, NSBuild]
@@ -110,6 +99,16 @@ jobs:
         if: always()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
+          
+  DiscordNotify_Fail:
+    runs-on: ubuntu-latest
+    needs: [SteamDeploy, UpdateReleaseDraft]    
+    if: ${{ failure() || cancelled()}}
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK}}
+          status: Failure  
 
 
 
