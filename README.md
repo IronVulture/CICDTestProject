@@ -28,3 +28,48 @@
 2. 將Windows Build上傳至Steam
 3. 依照PullRequest的內容自動更新Release Note草稿
 4. 在Disocrd進行成功通知
+
+
+## 設定
+
+
+   * [設定Self Host Runner](#設定self-host-runner)
+   * [WorkFlow設定](#workflow設定)
+        * [OnPullRequest](#onpullrequest)
+        * [DeleteBranchOnClose](#deletebranchonclose)
+        * [Deploy](#deploy)
+   * [Release Drafter設定](#release-drafter設定)
+   * [Steam Deploy設定](#steam-deploy設定)
+   * [Unity Build Script設定](#unity-build-script設定)
+   * [Discord Webhook設定](#discord-webhook設定)
+   * [Github Secrect設定](#github-secrect設定)
+
+
+### 設定Self Host Runner
+
+
+### WorkFlow設定
+
+
+#### OnPullRequest
+
+
+#### DeleteBranchOnClose
+
+
+#### Deploy
+
+
+### Release Drafter設定
+
+
+### Steam Deploy設定
+
+
+### Unity Build Script設定
+
+
+### Discord Webhook設定
+
+
+### Github Secrect設定
