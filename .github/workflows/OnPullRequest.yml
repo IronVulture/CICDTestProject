@@ -67,7 +67,7 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
           status: Failure
   
-  automerge:
+  Atomerge:
     runs-on: ubuntu-latest
     needs: [UnityTest, Win64Build, NSBuild]
     steps:
@@ -78,4 +78,6 @@ jobs:
           MERGE_LABELS: ""
           UPDATE_LABELS: ""
           
+
+
 
