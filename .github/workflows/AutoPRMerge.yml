@@ -1,9 +1,9 @@
 name: AutoPRMerge
 on:
-  check_suite:
-    types:
+  workflow_run:
+    workflows: ["PullRequestCheck"]
+    types: 
       - completed
-  status: {}  
 jobs:
   automerge:
     runs-on: ubuntu-latest
