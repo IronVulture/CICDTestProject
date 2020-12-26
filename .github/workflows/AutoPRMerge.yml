@@ -1,0 +1,15 @@
+name: AutoPRMerge
+on:
+  check_suite:
+    types:
+      - completed
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: automerge
+        uses: "pascalgn/automerge-action@v0.13.0"
+        with:
+          MERGE_LABELS: breaking,feature,bug,maintenance,docs,dependencies
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
