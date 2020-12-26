@@ -57,7 +57,7 @@ jobs:
       run: |
         "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -
           
-  DiscordNotify:
+  DiscordNotify_Fail:
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled()}}
     needs: [UnityTest, Win64Build, NSBuild]
@@ -66,6 +66,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
           status: Failure
+  
   
   Atomerge:
     runs-on: ubuntu-latest
@@ -77,7 +78,38 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: ""
           UPDATE_LABELS: ""
+
+  UpdateReleaseDraft:
+    runs-on: Ubuntu-latest
+    needs: [Atomerge]
+    steps:
+      - id: step1
+        uses: release-drafter/release-drafter@v5.12.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+  SteamDeploy:
+    runs-on: self-hosted
+    needs: [Atomerge]
+    steps:
+    - name: SteamDeploy
+      shell: cmd
+      env:
+        STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
+        STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
+        STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
+        STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
+      run: |
+        ${{env.STEAMCMD}} +login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
+          
+  DiscordNotify_Success:
+    runs-on: ubuntu-latest
+    needs: [SteamDeploy, UpdateReleaseDraft]
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK}}
 
 
 
