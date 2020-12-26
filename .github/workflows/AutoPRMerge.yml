@@ -1,7 +1,8 @@
 name: AutoPRMerge
 on:
   workflow_run:
-    workflows: ["PullRequestCheck"]
+    workflows: 
+      - PullRequestCheck
     types: 
       - completed
 jobs:
