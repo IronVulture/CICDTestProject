@@ -36,12 +36,12 @@ jobs:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
-        "${UNITY_PATH}"  -batchmode -projectPath=${PROJECT_PATH} -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
+        "${{env.UNITY_PATH}}"  -batchmode -projectPath=${{env.PROJECT_PATH}} -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
     
     - name: Unity Editor Mode Test
       shell: cmd
       run: |
-        "${UNITY_PATH}"  -batchmode -projectPath=${PROJECT_PATH} -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
+        "${{env.UNITY_PATH}}"  -batchmode -projectPath=${{env.PROJECT_PATH}} -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
       
   Win64Build:
     env: 
@@ -53,7 +53,7 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "${UNITY_PATH}"  -quit -batchmode -projectPath=${PROJECT_PATH}   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+        "${{env.UNITY_PATH}}"  -quit -batchmode -projectPath=${{env.PROJECT_PATH}}   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
                         
   NSBuild:
     env: 
@@ -65,7 +65,7 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "${UNITY_PATH}"  -quit -batchmode -projectPath=${PROJECT_PATH}   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
+        "${{env.UNITY_PATH}}"  -quit -batchmode -projectPath=${{env.PROJECT_PATH}}   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
     
   DiscordNotify_Fail:
     needs: [UnityTest, Win64Build, NSBuild] 
