@@ -5,30 +5,30 @@ template: |
   $CHANGES
 categories:
   - title: 'Breaking'
-    label: 'type: breaking'
+    label: 'breaking'
   - title: 'New'
-    label: 'type: feature'
+    label: 'feature'
   - title: 'Bug Fixes'
-    label: 'type: bug'
+    label: 'bug'
   - title: 'Maintenance'
-    label: 'type: maintenance'
+    label: 'maintenance'
   - title: 'Documentation'
-    label: 'type: docs'
+    label: 'docs'
   - title: 'Dependency Updates'
-    label: 'type: dependencies'
+    label: 'dependencies'
 
 version-resolver:
   major:
     labels:
-      - 'type: breaking'
+      - 'breaking'
   minor:
     labels:
-      - 'type: feature'
+      - 'feature'
   patch:
     labels:
-      - 'type: bug'
-      - 'type: maintenance'
-      - 'type: docs'
-      - 'type: dependencies'
-      - 'type: security'
+      - 'bug'
+      - 'maintenance'
+      - 'docs'
+      - 'dependencies'
+      - 'security'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
