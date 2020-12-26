@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: automerge
         uses: "pascalgn/automerge-action@v0.13.0"
-        with:
-          MERGE_LABELS: breaking,feature,bug,maintenance,docs,dependencies
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: breaking,feature,bug,maintenance,docs,dependencies
+          UPDATE_LABELS: breaking,feature,bug,maintenance,docs,dependencies
