@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - develop
-  
 jobs:
   Checkout:
     runs-on: self-hosted
@@ -17,45 +16,56 @@ jobs:
   RemoveOldBuilds:
     runs-on: self-hosted
     needs: [Checkout]
+    env:
+      BUILD_PATH: /Build
     steps:
     - name: Remove File
       uses: JesseTG/rm@v1.0.2
       with:
-        path: ${{github.workspace}}/Build
+        path: ${{github.workspace}}${BUILD_PATH}
   
   UnityTest:
     runs-on: self-hosted
     needs: [Checkout]
+    env: 
+      PROJECT_PATH: /ProjectFolder  
+      UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
     strategy:
       fail-fast: true    
     steps:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -batchmode -projectPath=/BuilderFolder -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
+        "${UNITY_PATH}"  -batchmode -projectPath=${PROJECT_PATH} -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
     
     - name: Unity Editor Mode Test
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
+        "${UNITY_PATH}"  -batchmode -projectPath=${PROJECT_PATH} -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
       
   Win64Build:
+    env: 
+      PROJECT_PATH: /ProjectFolder  
+      UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
     needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
     steps:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+        "${UNITY_PATH}"  -quit -batchmode -projectPath=${PROJECT_PATH}   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
                         
   NSBuild:
+    env: 
+      PROJECT_PATH: /ProjectFolder  
+      UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe    
     needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
     steps:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -          
+        "${UNITY_PATH}"  -quit -batchmode -projectPath=${PROJECT_PATH}   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
     
   DiscordNotify_Fail:
     runs-on: ubuntu-latest
