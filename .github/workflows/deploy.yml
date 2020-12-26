@@ -1,8 +1,10 @@
 name: CI
  
 on:
-  push:
-    branches: [ develop ]
+ push:
+   branches:
+     - develop
+
 
 jobs:
   UpdateReleaseDraft:

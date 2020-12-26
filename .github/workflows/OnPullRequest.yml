@@ -32,12 +32,12 @@ jobs:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
+        "C:\Program Files\Unity\Editor\Unity.exe"  -batchmode -projectPath=/BuilderFolder -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
     
     - name: Unity Editor Mode Test
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -  
+        "C:\Program Files\Unity\Editor\Unity.exe"  -batchmode -projectPath=/BuilderFolder -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
       
   Win64Build:
     needs: [RemoveOldBuilds, UnityTest]
@@ -55,15 +55,31 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -
-          
-  DiscordNotify:
+        "C:\Program Files\Unity\Editor\Unity.exe"  -quit -batchmode -projectPath=/BuilderFolder   -buildTarget Win64  -nographics  -executeMethod CI.SwitchBuild -logFile -          
+    
+  DiscordNotify_Fail:
     runs-on: ubuntu-latest
-    needs: [NSBuild,Win64Build,UnityTest]
+    needs: [UnityTest, Win64Build, NSBuild]    
+    if: ${{ failure() || cancelled()}}
     steps:
       - uses: sarisia/actions-status-discord@v1
-        if: ${{ failure() }}
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
+          status: Failure    
+  
+  Atomerge:
+    runs-on: ubuntu-latest
+    needs: [UnityTest, Win64Build, NSBuild]
+    steps:
+      - name: automerge
+        uses: "pascalgn/automerge-action@v0.13.0"
+        env:
+          GITHUB_TOKEN: "${{ secrets.MY_TOKEN }}"
+          MERGE_LABELS: ""
+          UPDATE_LABELS: ""
+
           
+
+
+
 
