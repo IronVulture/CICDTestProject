@@ -14,8 +14,8 @@ jobs:
         clean: false
   
   RemoveOldBuilds:
-    runs-on: self-hosted
     needs: [Checkout]
+    runs-on: self-hosted
     env:
       BUILD_PATH: /Build
     steps:
@@ -25,11 +25,11 @@ jobs:
         path: ${{github.workspace}}${BUILD_PATH}
   
   UnityTest:
-    runs-on: self-hosted
-    needs: [Checkout]
     env: 
       PROJECT_PATH: /ProjectFolder  
       UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
+    needs: [Checkout]    
+    runs-on: self-hosted  
     strategy:
       fail-fast: true    
     steps:
@@ -68,8 +68,8 @@ jobs:
         "${UNITY_PATH}"  -quit -batchmode -projectPath=${PROJECT_PATH}   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
     
   DiscordNotify_Fail:
-    runs-on: ubuntu-latest
-    needs: [UnityTest, Win64Build, NSBuild]    
+    needs: [UnityTest, Win64Build, NSBuild] 
+    runs-on: ubuntu-latest     
     if: ${{ failure() || cancelled()}}
     steps:
       - uses: sarisia/actions-status-discord@v1
@@ -78,8 +78,8 @@ jobs:
           status: Failure    
   
   Atomerge:
-    runs-on: ubuntu-latest
     needs: [UnityTest, Win64Build, NSBuild]
+    runs-on: ubuntu-latest
     steps:
       - name: automerge
         uses: "pascalgn/automerge-action@v0.13.0"
