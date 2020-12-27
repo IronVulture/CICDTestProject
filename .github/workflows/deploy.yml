@@ -8,13 +8,11 @@ on:
 jobs:
   UpdateReleaseDraft:
     runs-on: Ubuntu-latest
-    outputs:
-     tagname: ${{ steps.step1.outputs.tag_name }}
     steps:
       - id: step1
         uses: release-drafter/release-drafter@v5.12.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
   SteamDeploy:
     runs-on: self-hosted
@@ -22,12 +20,9 @@ jobs:
     - name: SteamDeploy
       shell: cmd
       env:
-        STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
-        STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
-        STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
-        STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
+        STEAMSCRIPT: ${{github.workspace}}${{secrets.STEAMSCRIPT}}
       run: |
-        ${{env.STEAMCMD}} +login ${{env.STEAMUSERNAME}} ${{env.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
+        ${{secrets.STEAMCMD}} +login ${{secrets.STEAMUSERNAME}} ${{secrets.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
           
   DiscordNotify:
     runs-on: ubuntu-latest
@@ -36,4 +31,4 @@ jobs:
       - uses: sarisia/actions-status-discord@v1
         if: always()
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK}}
+          webhook: ${{secrets.DISCORD_WEBHOOK}}
