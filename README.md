@@ -71,9 +71,9 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 * [Unity Build Script設定](#unity-build-script設定)
 * [Self-Hosted Runner設定](#self-hosted-runner設定)
 * [WorkFlow設定](#workflow設定)
-     * [OnPullRequest](#onpullrequest.yml設定)
-     * [DeleteBranchOnClose](#deletebranchonclose.yml設定)
-     * [Deploy](#deploy.yml設定)
+     * [OnPullRequest](#onpullrequest設定)
+     * [DeleteBranchOnClose](#deletebranchonclose設定)
+     * [Deploy](#deploy設定)
 * [Release Drafter設定](#release-drafter設定)
 * [Steam Deploy設定](#steam-deploy設定)
 * [Discord Webhook設定](#discord-webhook設定)
@@ -148,68 +148,77 @@ Set-ExecutionPolicy RemoteSigned
 
 | Workflow  | 時機與用途 | 
 | ------------ | ------------ | 
-| [OnPullRequest](#onpullrequest.yml設定)| 在Pull Request建立時，進行檢查與Build|
-| [DeleteBranchOnClose](#deletebranchonclose.yml設定)| 在Pull Request 關閉時，進行Branch刪除|
-| [Deploy](#deploy.yml設定) | 指定branch有push時(也就是Merge成功後)，進行ReleaseNote發布以及上傳Build 至 Steam|
+| [OnPullRequest](#onpullrequest設定)| 在Pull Request建立時，進行檢查與Build|
+| [DeleteBranchOnClose](#deletebranchonclose設定)| 在Pull Request 關閉時，進行Branch刪除|
+| [Deploy](#deploy設定) | 指定branch有push時(也就是Merge成功後)，進行ReleaseNote發布以及上傳Build 至 Steam|
 
-#### OnPullRequest.yml設定
-1. 設定觸發的branch，此案例是在`develop`分支有`Pull Reqeust`時觸發
+#### OnPullRequest設定
+1. `/.github/workflows/OnPullRequest.yml`設定觸發的branch，此案例是在`develop`分支有`Pull Reqeust`時觸發
     ```
     on:
       pull_request:
         branches:
           - develop
     ```
-2. RemoveOldBuilds是拿來刪除本地先前版本build的工作， 修改`BUILD_PATH`的參數與你Unity中 [Build Method](#unity-build-script設定)的指定路徑相同，此案例是 `/Build`
-    ```
-        RemoveOldBuilds:
-        needs: [Checkout]
-        runs-on: self-hosted
-        env:
-          BUILD_PATH: /Build
-        steps:
-        - name: Remove File
-          uses: JesseTG/rm@v1.0.2
-          with:
-            path: ${{github.workspace}}${BUILD_PATH}
-            
-     ```
-3. UnityTest、NSBuild、 Win64Build的工作中，將`UNIT_PATH`參數改為你的本地Unity路徑(請注意版本)
-    ```
-        env:  
-          UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
-    ```
-4. DiscordNotify_Fail中，`${{ secrets.DISCORD_WEBHOOK}}` 是讀取Github設定的Secret，請設定你想要通知錯誤的Discord頻道Webhook。
+2. RemoveOldBuilds是拿來刪除本地先前版本build的工作，需要設定Build的資料夾路徑 
+    - 新增 `BUILD_PATH` 到Secret中: 設定你[Unity Build Method](#unity-build-script設定)中`BuildPipeline.BuildPlayer`的指定資料夾路徑，此範例是:
+      ```
+      /Build
+      ```
+    - 請看[Github Secrect設定](#github-secrect設定)
+    
+3. UnityTest是進行Unity Test Runner，NSBuild及Win64Build是建置執行檔，需要設定你的本地`Unity.exe`路徑
+    - 新增 `UNIT_PATH` 到Secret中: 設定你的本地指定版本`Unity.exe`路徑，此範例是:
+      ```
+      C:\Program Files\Unity\Editor\Unity.exe
+      ```
+    - 請看[Github Secrect設定](#github-secrect設定)
+    
+4. DiscordNotify_Fail是當前面幾個工作失敗時，在Discord進行失敗通知，需要設定Discord Webhook
+    - 新增 `DISCORD_WEBHOOK` 到Secret中，請設定你想要通知錯誤的Discord頻道Webhook。
     - 請看[Github Secrect設定](#github-secrect設定)以及 [Discord Webhook設定](#discord-webhook設定)
 
-5. Atomerge中，`${{ secrets.MY_TOKEN }}`是讀取Github設定的Secret，必須使用個人的Github Assess Token才能觸發其他Workflow。
+5. Atomerge是當前面幾個工作成功後，會將Pull Reqeust自動Merge
+    - 新增 `MY_TOKEN` 到Secret中，這裡必須使用個人的Github Assess Token才能觸發其他Workflow。
+    - 請注意這個個人Token不可以是`Admin`，不然會將沒有通過`Pull Request Check`的`Pull Request`強制`Merge`。
     - 請看[Github Secrect設定](#github-secrect設定)以及 [個人的Assess Token官方文件](https://docs.github.com/cn/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
-
-#### DeleteBranchOnClose.yml設定
+    
+#### DeleteBranchOnClose設定
 
 不需要設定，也可以不使用，透過官方的自動Branch刪除方式
 - [Github管理分支自動刪除](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/managing-the-automatic-deletion-of-branches)
 
 
-#### Deploy.yml設定
+#### Deploy設定
 
-1. SteamDeploy中，設定SteamCMD路徑
-    ``` 
-    STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
+1. `/.github/workflows/deploy.yml`設定觸發的branch，此案例是在`develop`分支有`push`時觸發，請設定與 [OnPullRequest.yml](#onpullrequest設定) 相同的branch
     ```
-   - 請看[Steam Deploy設定](#steam-deploy設定)
-2. SteamDeploy中，在Screct中設定Build用的帳號密碼
+    on:
+      push:
+        branches:
+          - develop
+    ```    
    
-    ```
-         STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
-         STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
-    ```
-    - 請看[Github Secrect設定](#github-secrect設定)以及[Steam Deploy設定](#steam-deploy設定)
-3. SteamDeploy，設定BuildScript的路徑(`${{github.workspace}}`指的是Checkout後的專案目錄)
-    ``` 
-    STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
-    ```
-    - 請看[Steam Deploy設定](#steam-deploy設定)
+2. SteamDeploy中，在Screct中設定`steamcmd`用的帳號密碼
+   - 新增 `STEAMCMD` 到Secret中，請設定你本地的`steamcmd.exe`路徑，此範例是:
+     ```
+     C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe
+     ```
+   - 新增 `STEAMUSERNAME` 到Secret中，請設定你的stemcmd使用的帳號
+   - 新增 `STEAMPASSWORD` 到Secret中，請設定你的stemcmd使用的密碼
+   - 新增 `STEAMSCRIPT`到Secret中，請設定在專案中你的Steam Build Script的相對路徑，此範例是:
+     ```
+     \BuildScript\Steam\app_build_968770.vdf
+     ```  
+   - 請看[Github Secrect設定](#github-secrect設定)以及[Steam Deploy設定](#steam-deploy設定)
+
+3. UpdateReleaseDraft是在 `SteamDeploy` 成功之後，依照Pull Request的標題以及標籤產生Release Draft
+    - 請看[Release Drafter設定](#release-drafter設定)
+   
+4. DiscordNotify 是在前面工作成功或失敗時，在Discord進行通知，需要設定Discord Webhook
+    - 此處與 [OnPullRequest](#onpullrequest設定) 中的`DiscordNotify_Fail` Secret 設定相同
+    - 新增 `DISCORD_WEBHOOK` 到Secret中，請設定你想要通知錯誤的Discord頻道Webhook。
+    - 請看[Github Secrect設定](#github-secrect設定)以及 [Discord Webhook設定](#discord-webhook設定)
 -----------------------------------------------------------------------------
 
 ### Release Drafter設定
@@ -249,6 +258,44 @@ Set-ExecutionPolicy RemoteSigned
 - [PullRequest必須狀態檢查設定(官方文件)](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/enabling-required-status-checks)
 
 待完成
+
+-----------------------------------------------------------------------------
+
+### 設定檢查清單
+- ✅ Unity環境安裝
+    - ✅ 在本地安裝 指定版本Unity Editor
+    - ✅ Switch 擴充安裝 (如果有Switch Build)
+- ✅ Unity Build Script 製作與測試
+    - ✅ 建立Unity Build Script - Windows
+    - ✅ BuildScript測試 - Windows
+    - ✅ 建立Unity Build Script - Switch (如果有Switch Build)
+    - ✅ BuildScript測試 - Switch  (如果有Switch Build)
+- ✅ Steam Deploy 設置
+    - ✅ 本地下載Steam SDK Tools 
+    - ✅ 設定Steam App Build Script 並放入 repo
+    - ✅ 設定Steam Depot Build Script 並放入 repo
+    - ✅ 首次登入 Steam cmd 解決 Steam Gaurd
+    - ✅ Deploy測試
+- ✅ Github Action Self-Hosted Runner設定
+- ✅ 建立`.yml`
+    - ✅ `OnPullRequest`
+    - ✅ `DeleteBranchOnClose`
+    - ✅ `Deploy`
+- ✅ Github Secret 全域變數設定
+    - ✅ `BUILD_PATH` : Build相對路徑
+    - ✅ `UNITY_PATH` : Unity相對路徑
+    - ✅ `MY_TOKEN` : AutoMerge的Personal Token (不可以是 `Admin` 權限)
+    - ✅ `STEAMCMD` : steamcmd絕對路徑
+    - ✅ `STEAMSCRIPT` : Steam Build Script相對路徑
+    - ✅ `STEAMUSERNAME` : steamcmd使用的帳號
+    - ✅ `STEAMPASSWORD` : steamcmd使用的密碼
+    - ✅ `DISCORD_WEBHOOK` : 指定Discord通知頻道的Webhook
+- ✅ Pull Request Require Check設定
+- ✅ Release Drafter 設定
+    - ✅ 建立並設定 `release-drafter.yml`
+    - ✅ Pull Reqeust Label設定
+
+-----------------------------------------------------------------------------
 
 ## 參考
 [GitHub Actions のセルフホストランナーで Unity ビルドする](https://framesynthesis.jp/tech/github/actions-unity/)
