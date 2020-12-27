@@ -61,3 +61,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+#rider
+/.idea.CICDTestProject.dir/.idea/workspace.xml
+
