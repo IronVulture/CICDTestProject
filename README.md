@@ -147,53 +147,93 @@ Set-ExecutionPolicy RemoteSigned
 
 | Workflow  | 時機與用途 | 
 | ------------ | ------------ | 
-| OnPullRequest| 在Pull Request建立時，進行檢查與Build|
-| DeleteBranchOnClose| 在Pull Request 關閉時，進行Branch刪除|
-| Deploy | 指定branch有push時(也就是Merge成功後)，進行ReleaseNote發布以及上傳Build 至 Steam|
+| [OnPullRequest](#onpullrequest.yml設定)| 在Pull Request建立時，進行檢查與Build|
+| [DeleteBranchOnClose](#deletebranchonclose.yml設定)| 在Pull Request 關閉時，進行Branch刪除|
+| [Deploy](#deploy.yml設定) | 指定branch有push時(也就是Merge成功後)，進行ReleaseNote發布以及上傳Build 至 Steam|
 
 #### OnPullRequest.yml設定
 1. 設定觸發的branch，此案例是在`develop`分支有`Pull Reqeust`時觸發
-```
-on:
-  pull_request:
-    branches:
-      - develop
-```
-2. RemoveOldBuilds是拿來刪除本地先前版本build的工作， 修改BUILD_PATH的參數與你Unity中 [Build Method](#unity-build-script設定)的指定路徑相同，此案例是 `/Build`
-```
-    RemoveOldBuilds:
-    needs: [Checkout]
-    runs-on: self-hosted
-    env:
-      BUILD_PATH: /Build
-    steps:
-    - name: Remove File
-      uses: JesseTG/rm@v1.0.2
-      with:
-        path: ${{github.workspace}}${BUILD_PATH}
-        
- ```
-3. UnityTest、NSBuild、 Win64Build的工作中，
+    ```
+    on:
+      pull_request:
+        branches:
+          - develop
+    ```
+2. RemoveOldBuilds是拿來刪除本地先前版本build的工作， 修改`BUILD_PATH`的參數與你Unity中 [Build Method](#unity-build-script設定)的指定路徑相同，此案例是 `/Build`
+    ```
+        RemoveOldBuilds:
+        needs: [Checkout]
+        runs-on: self-hosted
+        env:
+          BUILD_PATH: /Build
+        steps:
+        - name: Remove File
+          uses: JesseTG/rm@v1.0.2
+          with:
+            path: ${{github.workspace}}${BUILD_PATH}
+            
+     ```
+3. UnityTest、NSBuild、 Win64Build的工作中，將`UNIT_PATH`參數改為你的本地Unity路徑(請注意版本)
+    ```
+        env:  
+          UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
+    ```
+4. DiscordNotify_Fail中，`${{ secrets.DISCORD_WEBHOOK}}` 是讀取Github設定的Secret，請設定你想要通知錯誤的Discord頻道Webhook。
+    - 請看[Github Secrect設定](#github-secrect設定)以及 [Discord Webhook設定](#discord-webhook設定)
+
+5. Atomerge中，`${{ secrets.MY_TOKEN }}`是讀取Github設定的Secret，必須使用個人的Github Assess Token才能觸發其他Workflow。
+    - 請看[Github Secrect設定](#github-secrect設定)以及 [個人的Assess Token官方文件](https://docs.github.com/cn/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
+
 #### DeleteBranchOnClose.yml設定
+
+不需要設定，也可以不使用，透過官方的自動Branch刪除方式
+- [Github管理分支自動刪除](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/managing-the-automatic-deletion-of-branches)
 
 
 #### Deploy.yml設定
 
+1. SteamDeploy中，設定SteamCMD路徑
+    ``` 
+    STEAMCMD: '"C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"'
+    ```
+   - 請看[Steam Deploy設定](#steam-deploy設定)
+2. SteamDeploy中，在Screct中設定Build用的帳號密碼
+   
+    ```
+         STEAMUSERNAME: ${{ secrets.STEAMUSERNAME }}
+         STEAMPASSWORD: ${{ secrets.STEAMPASSWORD }}
+    ```
+    - 請看[Github Secrect設定](#github-secrect設定)以及[Steam Deploy設定](#steam-deploy設定)
+3. SteamDeploy，設定BuildScript的路徑(`${{github.workspace}}`指的是Checkout後的專案目錄)
+    ``` 
+    STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
+    ```
+  - 請看[Steam Deploy設定](#steam-deploy設定)
 -----------------------------------------------------------------------------
 
 ### Release Drafter設定
+
+待完成
 
 -----------------------------------------------------------------------------
 
 ### Steam Deploy設定
 
+- [Steam官方部屬教學](https://partner.steamgames.com/doc/sdk/uploading)
+
+待完成
+
 -----------------------------------------------------------------------------
 
 ### Discord Webhook設定
 
+待完成
+
 -----------------------------------------------------------------------------
 
-### Github Secrect設定
+### 如何設定Secret
+
+待完成
 
 -----------------------------------------------------------------------------
 
