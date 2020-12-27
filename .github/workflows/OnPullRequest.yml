@@ -33,12 +33,12 @@ jobs:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
-        "${{secrets.UNITY_PATH}}"  -batchmode -projectPath . -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
+        ${{secrets.UNITY_PATH}}  -batchmode -projectPath . -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
     
     - name: Unity Editor Mode Test
       shell: cmd
       run: |
-        "${{secrets.UNITY_PATH}}"  -batchmode -projectPath . -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
+        ${{secrets.UNITY_PATH}}  -batchmode -projectPath . -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
       
   Win64Build:
     needs: [RemoveOldBuilds, UnityTest]
@@ -47,7 +47,7 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "$${{secrets.UNITY_PATH}}"  -quit -batchmode -projectPath .   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+        $${{secrets.UNITY_PATH}}  -quit -batchmode -projectPath .   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
                         
   NSBuild:  
     needs: [RemoveOldBuilds, UnityTest]
@@ -56,7 +56,7 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        "${{secrets.UNITY_PATH}}"  -quit -batchmode -projectPath .   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
+        ${{secrets.UNITY_PATH}}  -quit -batchmode -projectPath .   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
     
   DiscordNotify_Fail:
     needs: [UnityTest, Win64Build, NSBuild] 
