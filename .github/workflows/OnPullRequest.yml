@@ -16,13 +16,11 @@ jobs:
   RemoveOldBuilds:
     needs: [Checkout]
     runs-on: self-hosted
-    env:
-      BUILD_PATH: /Build
     steps:
     - name: Remove File
       uses: JesseTG/rm@v1.0.2
       with:
-        path: ${{github.workspace}}${BUILD_PATH}
+        path: ${{github.workspace}}${{secrets.BUILD_PATH}}
   
   UnityTest:
     env:  
@@ -35,34 +33,30 @@ jobs:
     - name: Unity Play Mode Test
       shell: cmd
       run: |
-        "${{env.UNITY_PATH}}"  -batchmode -projectPath . -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
+        "${{secrets.UNITY_PATH}}"  -batchmode -projectPath . -runTests -testPlatform PlayMode -testResults TestResult-PlayMode.xml -logFile  -  
     
     - name: Unity Editor Mode Test
       shell: cmd
       run: |
-        "${{env.UNITY_PATH}}"  -batchmode -projectPath . -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
+        "${{secrets.UNITY_PATH}}"  -batchmode -projectPath . -runTests -testPlatform EditMode -testResults TestResult-EditMode.xml -logFile  -                                                  
       
   Win64Build:
-    env: 
-      UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
     needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
     steps:
     - name: Unity Build
       shell: cmd
       run: |
-        "${{env.UNITY_PATH}}"  -quit -batchmode -projectPath .   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+        "$${{secrets.UNITY_PATH}}"  -quit -batchmode -projectPath .   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
                         
-  NSBuild:
-    env: 
-      UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe    
+  NSBuild:  
     needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
     steps:
     - name: Unity Build
       shell: cmd
       run: |
-        "${{env.UNITY_PATH}}"  -quit -batchmode -projectPath .   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
+        "${{secrets.UNITY_PATH}}"  -quit -batchmode -projectPath .   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
     
   DiscordNotify_Fail:
     needs: [UnityTest, Win64Build, NSBuild] 
