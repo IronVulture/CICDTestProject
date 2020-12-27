@@ -286,7 +286,9 @@ Set-ExecutionPolicy RemoteSigned
     - ✅ `UNITY_PATH` : Unity相對路徑
     - ✅ `MY_TOKEN` : AutoMerge的Personal Token (不可以是 `Admin` 權限)
     - ✅ `STEAMCMD` : steamcmd絕對路徑
-    - ✅ `STEAMSCRIPT` :Steam Build Script相對路徑
+    - ✅ `STEAMSCRIPT` : Steam Build Script相對路徑
+    - ✅ `STEAMUSERNAME` : steamcmd使用的帳號
+    - ✅ `STEAMPASSWORD` : steamcmd使用的密碼
     - ✅ `DISCORD_WEBHOOK` : 指定Discord通知頻道的Webhook
 - ✅ Pull Request Require Check設定
 - ✅ Release Drafter 設定
