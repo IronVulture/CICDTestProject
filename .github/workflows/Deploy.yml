@@ -22,7 +22,7 @@ jobs:
       env:
         STEAMSCRIPT: ${{github.workspace}}${{secrets.STEAMSCRIPT}}
       run: |
-        "${{secrets.STEAMCMD}}" +login ${{secrets.STEAMUSERNAME}} ${{secrets.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
+        ${{secrets.STEAMCMD}} +login ${{secrets.STEAMUSERNAME}} ${{secrets.STEAMPASSWORD}} +run_app_build ${{env.STEAMSCRIPT}} +quit
           
   DiscordNotify:
     runs-on: ubuntu-latest
