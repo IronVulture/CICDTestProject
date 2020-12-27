@@ -25,7 +25,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 
 ## 用途
 
-####當Pull Request在指定Branch發生時:
+###當Pull Request在指定Branch發生時:
 ![](ReadmeImg/OnPullRequest.png)
 
 1. Checkout指定Branch的Repository至 `$GITHUB_WORKSPACE`
@@ -35,7 +35,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 5. 以上成功後，自動Merge 
 6. 如果以上失敗會在Discord進行失敗通知
 
-####當Merge成功時:
+###當Merge成功時:
 
 ![](ReadmeImg/Deploy.png)
 
@@ -43,7 +43,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 2. 依照PullRequest的內容自動更新Release Note草稿
 3. 在Disocrd進行成功通知
 
-####當Pull Reqeust Close時(通常也就是merge成功時):
+###當Pull Reqeust Close時(通常也就是merge成功時):
 
 ![](ReadmeImg/DeleteBranch.png)
 
