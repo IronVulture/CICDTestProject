@@ -262,36 +262,36 @@ Set-ExecutionPolicy RemoteSigned
 -----------------------------------------------------------------------------
 
 ### 設定檢查清單
-- [x] Unity環境安裝
-    - [x] 在本地安裝 指定版本Unity Editor
-    - [x] Switch 擴充安裝 (如果有Switch Build)
-- [x] Unity Build Script 製作與測試
-    - [x] 建立Unity Build Script - Windows
-    - [x] BuildScript測試 - Windows
-    - [x] 建立Unity Build Script - Switch (如果有Switch Build)
-    - [x] BuildScript測試 - Switch  (如果有Switch Build)
-- [x] Steam Deploy 設置
-    - [x] 本地下載Steam SDK Tools 
-    - [x] 設定Steam App Build Script 並放入 repo
-    - [x] 設定Steam Depot Build Script 並放入 repo
-    - [x] 首次登入 Steam cmd 解決 Steam Gaurd
-    - [x] Deploy測試
-- [x] Github Action Self-Hosted Runner設定
-- [x] 建立`.yml`
-    - [x] `OnPullRequest`
-    - [x] `DeleteBranchOnClose`
-    - [x] `Deploy`
-- [x] Github Secret 全域變數設定
-    - [x] `BUILD_PATH` : Build相對路徑
-    - [x] `UNITY_PATH` : Unity相對路徑
-    - [x] `MY_TOKEN` : AutoMerge的Personal Token (不可以是 `Admin` 權限)
-    - [x] `STEAMCMD` : steamcmd絕對路徑
-    - [x] `STEAMSCRIPT` :Steam Build Script相對路徑
-    - [x] `DISCORD_WEBHOOK` : 指定Discord通知頻道的Webhook
-- [x] Pull Request Require Check設定
-- [x] Release Drafter 設定
-    - [x] 建立並設定 `release-drafter.yml`
-    - [x] Pull Reqeust Label設定
+- ✅ Unity環境安裝
+    - ✅ 在本地安裝 指定版本Unity Editor
+    - ✅ Switch 擴充安裝 (如果有Switch Build)
+- ✅ Unity Build Script 製作與測試
+    - ✅ 建立Unity Build Script - Windows
+    - ✅ BuildScript測試 - Windows
+    - ✅ 建立Unity Build Script - Switch (如果有Switch Build)
+    - ✅ BuildScript測試 - Switch  (如果有Switch Build)
+- ✅ Steam Deploy 設置
+    - ✅ 本地下載Steam SDK Tools 
+    - ✅ 設定Steam App Build Script 並放入 repo
+    - ✅ 設定Steam Depot Build Script 並放入 repo
+    - ✅ 首次登入 Steam cmd 解決 Steam Gaurd
+    - ✅ Deploy測試
+- ✅ Github Action Self-Hosted Runner設定
+- ✅ 建立`.yml`
+    - ✅ `OnPullRequest`
+    - ✅ `DeleteBranchOnClose`
+    - ✅ `Deploy`
+- ✅ Github Secret 全域變數設定
+    - ✅ `BUILD_PATH` : Build相對路徑
+    - ✅ `UNITY_PATH` : Unity相對路徑
+    - ✅ `MY_TOKEN` : AutoMerge的Personal Token (不可以是 `Admin` 權限)
+    - ✅ `STEAMCMD` : steamcmd絕對路徑
+    - ✅ `STEAMSCRIPT` :Steam Build Script相對路徑
+    - ✅ `DISCORD_WEBHOOK` : 指定Discord通知頻道的Webhook
+- ✅ Pull Request Require Check設定
+- ✅ Release Drafter 設定
+    - ✅ 建立並設定 `release-drafter.yml`
+    - ✅ Pull Reqeust Label設定
 
 -----------------------------------------------------------------------------
 
