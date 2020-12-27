@@ -60,7 +60,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 | Action  | 用途  | 狀態 |
 | ------------ | ------------ | ----------|
 | [Checkout](https://github.com/actions/checkout "Checkout")| 將Repository checks-out 至 `$GITHUB_WORKSPACE` 下 | ![Build Status](https://github.com/actions/checkout/workflows/test-local/badge.svg)|
-| <a href="https://github.com/release-drafter/release-drafter">Release Drafter</a>  | 依照Pull Reqeust的資訊，自動產生Release Note  ||
+| [Release Drafter](https://github.com/release-drafter/release-drafter)  | 依照Pull Reqeust的資訊，自動產生Release Note  ||
 | [Actions Status Discord](https://github.com/sarisia/actions-status-discord "Actions Status Discord")  | 透過Webhook在Discord發出訊息  ||
 | [Automerge-action](https://github.com/pascalgn/automerge-action "Automerge-action")  | 自動Merge Pull Request  ||
 | [Remove File](https://github.com/JesseTG/rm "Remove File")  | 全平台移除檔案或資料夾  ||
@@ -78,6 +78,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 * [Steam Deploy設定](#steam-deploy設定)
 * [Discord Webhook設定](#discord-webhook設定)
 * [Github Secrect設定](#github-secrect設定)
+* [Pull Request 狀態檢查設定](#pull-request-狀態檢查設定)
 
 -----------------------------------------------------------------------------
 
@@ -208,11 +209,12 @@ Set-ExecutionPolicy RemoteSigned
     ``` 
     STEAMSCRIPT: ${{github.workspace}}\BuildScript\Steam\app_build_968770.vdf
     ```
-  - 請看[Steam Deploy設定](#steam-deploy設定)
+    - 請看[Steam Deploy設定](#steam-deploy設定)
 -----------------------------------------------------------------------------
 
 ### Release Drafter設定
 
+- [Release Drafter](https://github.com/release-drafter/release-drafter)
 待完成
 
 -----------------------------------------------------------------------------
@@ -227,15 +229,25 @@ Set-ExecutionPolicy RemoteSigned
 
 ### Discord Webhook設定
 
+- [Discord Webhook官方文件](https://support.discord.com/hc/zh-tw/articles/228383668-%E4%BD%BF%E7%94%A8%E7%B6%B2%E7%B5%A1%E9%89%A4%E6%89%8B-Webhooks-)
+
 待完成
 
 -----------------------------------------------------------------------------
 
 ### 如何設定Secret
 
+- [Github官方Secret文件](https://docs.github.com/cn/free-pro-team@latest/actions/reference/encrypted-secrets)
+
 待完成
 
 -----------------------------------------------------------------------------
+
+### Pull Request 狀態檢查設定
+
+- [PullRequest必須狀態檢查設定(官方文件)](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/enabling-required-status-checks)
+
+待完成
 
 ## 參考
 [GitHub Actions のセルフホストランナーで Unity ビルドする](https://framesynthesis.jp/tech/github/actions-unity/)
