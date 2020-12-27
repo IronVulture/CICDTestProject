@@ -170,7 +170,7 @@ Set-ExecutionPolicy RemoteSigned
 3. UnityTest是進行Unity Test Runner，NSBuild及Win64Build是建置執行檔，需要設定你的本地`Unity.exe`路徑
     - 新增 `UNIT_PATH` 到Secret中: 設定你的本地指定版本`Unity.exe`路徑，此範例是:
       ```
-      C:\Program Files\Unity\Editor\Unity.exe
+      "C:\Program Files\Unity\Editor\Unity.exe"
       ```
     - 請看[Github Secrect設定](#github-secrect設定)
     
@@ -202,7 +202,7 @@ Set-ExecutionPolicy RemoteSigned
 2. SteamDeploy中，在Screct中設定`steamcmd`用的帳號密碼
    - 新增 `STEAMCMD` 到Secret中，請設定你本地的`steamcmd.exe`路徑，此範例是:
      ```
-     C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe
+     "C:\SteamSDK\sdk\tools\ContentBuilder\builder\steamcmd.exe"
      ```
    - 新增 `STEAMUSERNAME` 到Secret中，請設定你的stemcmd使用的帳號
    - 新增 `STEAMPASSWORD` 到Secret中，請設定你的stemcmd使用的密碼
