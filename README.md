@@ -25,7 +25,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 
 ## 用途
 
-###當Pull Request在指定Branch發生時:
+### 當Pull Request在指定Branch發生時:
 ![](ReadmeImg/OnPullRequest.png)
 
 1. Checkout指定Branch的Repository至 `$GITHUB_WORKSPACE`
@@ -35,7 +35,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 5. 以上成功後，自動Merge 
 6. 如果以上失敗會在Discord進行失敗通知
 
-###當Merge成功時:
+### 當Merge成功時:
 
 ![](ReadmeImg/Deploy.png)
 
@@ -43,7 +43,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 2. 依照PullRequest的內容自動更新Release Note草稿
 3. 在Disocrd進行成功通知
 
-###當Pull Reqeust Close時(通常也就是merge成功時):
+### 當Pull Reqeust Close時(通常也就是merge成功時):
 
 ![](ReadmeImg/DeleteBranch.png)
 
@@ -52,7 +52,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 實際上也可以透過Github Repository的設定來自動刪除Branch，但我想要全部都掌控在
  - [Github管理分支自動刪除](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/managing-the-automatic-deletion-of-branches)
 
-##限制
+## 限制
 如果你使用的是Unity Personal版本，大中華區的用戶有每三日需要登入一次的問題，
 這個問題目前沒有work around。CICD省去的時間與精神力，是值得付費Unity的。
 
@@ -69,7 +69,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 
 ## 設定
 * [Unity Build Script設定](#unity-build-script設定)
-* [設定Self-Hosted Runner](#設定self-hosted-runner)
+* [Self-Hosted Runner設定](#self-hosted-runner設定)
 * [WorkFlow設定](#workflow設定)
      * [OnPullRequest](#onpullrequest)
      * [DeleteBranchOnClose](#deletebranchonclose)
@@ -115,7 +115,7 @@ public class CI
 細節可以看官方文件:
 - [Unity Command Line Arguments](https://docs.unity3d.com/Manual/CommandLineArguments.html)
 
-### 設定Self-Hosted Runner
+### Self-Hosted Runner設定
 
 1. 開啟Github Repository網頁 `Settings` > `Actions`
 2. `Self-hosted runners` 的欄位中選擇 `Add runner` 按鈕
