@@ -47,7 +47,7 @@ jobs:
     - name: Unity Build
       shell: cmd
       run: |
-        $${{secrets.UNITY_PATH}}  -quit -batchmode -projectPath .   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+       ${{secrets.UNITY_PATH}}  -quit -batchmode -projectPath .   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
                         
   NSBuild:  
     needs: [RemoveOldBuilds, UnityTest]
