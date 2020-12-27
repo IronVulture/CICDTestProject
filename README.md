@@ -4,9 +4,9 @@
 
 ## 前言
 這個範例是依據我們專案的CICD需求所設計，這邊也記錄一些基礎知識，
-包含使用的工具、Unity自動化建置、測試等。
+包含使用的工具、Unity自動化建置、測試等。理解做法與原理後，可以按照需求自由的調整。
 
-## Github Action
+## 關於Github Action
 原先我們使用Jenkins，但使用Github Action可以使工作更集中在統一的系統上。
 
 Github Action是個非常容易使用的Github Repository自動化服務。
@@ -24,22 +24,37 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 - [關於Github Action的付費(官方文件)](https://docs.github.com/cn/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions)
 
 ## 用途
-當Pull Request在指定Branch發生時:
+
+####當Pull Request在指定Branch發生時:
+![](ReadmeImg/OnPullRequest.png)
+
 1. Checkout指定Branch的Repository至 `$GITHUB_WORKSPACE`
 2. 跑Unity TestRun PlayMode以及EditorMode
 3. 移除上次Build的檔案
 4. Unity Build Windows與Switch版本
-5. 以上成功後，自動Merge
-   如果以上失敗會在Discord進行失敗通知
+5. 以上成功後，自動Merge 
+6. 如果以上失敗會在Discord進行失敗通知
 
-當Merge成功時:
+####當Merge成功時:
+
+![](ReadmeImg/Deploy.png)
+
+1. 將Windows Build上傳至Steam
+2. 依照PullRequest的內容自動更新Release Note草稿
+3. 在Disocrd進行成功通知
+
+####當Pull Reqeust Close時(通常也就是merge成功時):
+
+![](ReadmeImg/DeleteBranch.png)
+
 1. 刪除已經Merge的Pull Request來源Branch
-2. 將Windows Build上傳至Steam
-3. 依照PullRequest的內容自動更新Release Note草稿
-4. 在Disocrd進行成功通知
+
+實際上也可以透過Github Repository的設定來自動刪除Branch，但我想要全部都掌控在
+ - [Github管理分支自動刪除](https://docs.github.com/cn/free-pro-team@latest/github/administering-a-repository/managing-the-automatic-deletion-of-branches)
 
 ##限制
-如果你使用的是Unity Personal版本，大中華區的用戶有每三日需要登入一次的問題。
+如果你使用的是Unity Personal版本，大中華區的用戶有每三日需要登入一次的問題，
+這個問題目前沒有work around。CICD省去的時間與精神力，是值得付費Unity的。
 
 ## 依賴的Action
 | Action  | 用途  | 狀態 |
@@ -53,6 +68,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 
 
 ## 設定
+* [Unity Build Script設定](#unity-build-script設定)
 * [設定Self-Hosted Runner](#設定self-hosted-runner)
 * [WorkFlow設定](#workflow設定)
      * [OnPullRequest](#onpullrequest)
@@ -60,19 +76,63 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
      * [Deploy](#deploy)
 * [Release Drafter設定](#release-drafter設定)
 * [Steam Deploy設定](#steam-deploy設定)
-* [Unity Build Script設定](#unity-build-script設定)
 * [Discord Webhook設定](#discord-webhook設定)
 * [Github Secrect設定](#github-secrect設定)
 
+### Unity Build Script設定
+在專案資料夾: Assets/Editor 中建立一個Build腳本，裡面寫build用的method(這個範例有Win64以及Switch兩個Build Method):
+```
+using System.Linq;
+using UnityEditor;
+
+public class CI
+{
+    [MenuItem("CI/Win64Build")]
+    public static void Win64Build()
+    {
+#if UNITY_EDITOR
+        BuildPipeline.BuildPlayer(ScenePaths, "Build/TestProject.exe", BuildTarget.StandaloneWindows64,
+            BuildOptions.None);
+#endif
+    }
+    [MenuItem("CI/SwitchBuild")]
+    static void SwitchBuild()
+    {
+
+#if UNITY_EDITOR
+        BuildPipeline.BuildPlayer(ScenePaths, "NSbuilds/TestProject", BuildTarget.Switch, BuildOptions.Development);
+#endif
+    }
+
+    static string[] ScenePaths => EditorBuildSettings.scenes.Select(scene => scene.path).ToArray();
+}
+```
+
+在Consle中執行這段就能執行指定目標平台以及Class的Method(在Github Action中也是這樣去執行):
+```
+"C:\你的Unity\資較夾路徑\Unity.exe"  -quit -batchmode -projectPath=你的\專案\路徑   -buildTarget Win64  -nographics  -executeMethod CI.Win64Build -logFile -
+```
+細節可以看官方文件:
+- [Unity Command Line Arguments](https://docs.unity3d.com/Manual/CommandLineArguments.html)
 
 ### 設定Self-Hosted Runner
+
 1. 開啟Github Repository網頁 `Settings` > `Actions`
 2. `Self-hosted runners` 的欄位中選擇 `Add runner` 按鈕
-3. 打開 PowerShell 移動到系統根目錄(例:C:\)，按照頁面設定 (跟著複製貼上就對了)
+3. 打開`PowerShell` 移動到系統根目錄(例:C:\\)，按照頁面設定 (跟著步驟複製貼上就對了)
+
+中間會問你 「Enter name of work folder:」 這個是設定之後workrun的根目錄資料夾，很重要所以請記得與注意
 
 最後會問你 「Would you like to run the runner as service? (Y/N)」
 如果你回答Y，那這個Runner將會以Windows服務的形式，在背景運行。
 
+這並非必要，你也可已透過`run.cmd`來運行
+
+注意:在設定的過程中PowerShell可能會顯示:出現「因為這個系統上已停用指令碼執行...」，因為系統預設是有限制的，所以請輸入以下指令來解除限制:
+
+```
+Set-ExecutionPolicy RemoteSigned
+```
 
 
 
@@ -94,7 +154,7 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 ### Steam Deploy設定
 
 
-### Unity Build Script設定
+
 
 
 ### Discord Webhook設定
