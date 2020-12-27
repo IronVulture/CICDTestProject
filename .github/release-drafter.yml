@@ -17,6 +17,9 @@ categories:
   - title: 'Dependency Updates'
     label: 'dependencies'
 
+exclude-labels:
+  - 'skip-changelog'
+
 version-resolver:
   major:
     labels:

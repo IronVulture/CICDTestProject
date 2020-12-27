@@ -1,10 +1,9 @@
-name: CI
+name: DeployAndReleaseNote
  
 on:
  push:
    branches:
      - develop
-
 
 jobs:
   UpdateReleaseDraft:
