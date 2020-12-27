@@ -71,13 +71,15 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 * [Unity Build Script設定](#unity-build-script設定)
 * [Self-Hosted Runner設定](#self-hosted-runner設定)
 * [WorkFlow設定](#workflow設定)
-     * [OnPullRequest](#onpullrequest)
-     * [DeleteBranchOnClose](#deletebranchonclose)
-     * [Deploy](#deploy)
+     * [OnPullRequest](#onpullrequest.yml設定)
+     * [DeleteBranchOnClose](#deletebranchonclose.yml設定)
+     * [Deploy](#deploy.yml設定)
 * [Release Drafter設定](#release-drafter設定)
 * [Steam Deploy設定](#steam-deploy設定)
 * [Discord Webhook設定](#discord-webhook設定)
 * [Github Secrect設定](#github-secrect設定)
+
+-----------------------------------------------------------------------------
 
 ### Unity Build Script設定
 在專案資料夾: Assets/Editor 中建立一個Build腳本，裡面寫build用的method(這個範例有Win64以及Switch兩個Build Method):
@@ -115,6 +117,8 @@ public class CI
 細節可以看官方文件:
 - [Unity Command Line Arguments](https://docs.unity3d.com/Manual/CommandLineArguments.html)
 
+-----------------------------------------------------------------------------
+
 ### Self-Hosted Runner設定
 
 1. 開啟Github Repository網頁 `Settings` > `Actions`
@@ -134,34 +138,64 @@ public class CI
 Set-ExecutionPolicy RemoteSigned
 ```
 
-
+-----------------------------------------------------------------------------
 
 ### WorkFlow設定
+在Gitub Repository中的 `/.github/workflows/`路徑中建立 `.yml` 文件來定義自動化的內容，每一個文件及是一個`Work Flow`
+
+這個範例是由三個Work Flow組成，分別是:
+
+| Workflow  | 時機與用途 | 
+| ------------ | ------------ | 
+| OnPullRequest| 在Pull Request建立時，進行檢查與Build|
+| DeleteBranchOnClose| 在Pull Request 關閉時，進行Branch刪除|
+| Deploy | 指定branch有push時(也就是Merge成功後)，進行ReleaseNote發布以及上傳Build 至 Steam|
+
+#### OnPullRequest.yml設定
+1. 設定觸發的branch，此案例是在`develop`分支有`Pull Reqeust`時觸發
+```
+on:
+  pull_request:
+    branches:
+      - develop
+```
+2. RemoveOldBuilds是拿來刪除本地先前版本build的工作， 修改BUILD_PATH的參數與你Unity中 [Build Method](#unity-build-script設定)的指定路徑相同，此案例是 `/Build`
+```
+    RemoveOldBuilds:
+    needs: [Checkout]
+    runs-on: self-hosted
+    env:
+      BUILD_PATH: /Build
+    steps:
+    - name: Remove File
+      uses: JesseTG/rm@v1.0.2
+      with:
+        path: ${{github.workspace}}${BUILD_PATH}
+        
+ ```
+3. UnityTest、NSBuild、 Win64Build的工作中，
+#### DeleteBranchOnClose.yml設定
 
 
-#### OnPullRequest
+#### Deploy.yml設定
 
-
-#### DeleteBranchOnClose
-
-
-#### Deploy
-
+-----------------------------------------------------------------------------
 
 ### Release Drafter設定
 
+-----------------------------------------------------------------------------
 
 ### Steam Deploy設定
 
-
-
-
+-----------------------------------------------------------------------------
 
 ### Discord Webhook設定
 
+-----------------------------------------------------------------------------
 
 ### Github Secrect設定
 
+-----------------------------------------------------------------------------
 
-##參考
+## 參考
 [GitHub Actions のセルフホストランナーで Unity ビルドする](https://framesynthesis.jp/tech/github/actions-unity/)
