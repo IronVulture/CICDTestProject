@@ -25,8 +25,7 @@ jobs:
         path: ${{github.workspace}}${BUILD_PATH}
   
   UnityTest:
-    env: 
-      PROJECT_PATH: /ProjectFolder  
+    env:  
       UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
     needs: [Checkout]    
     runs-on: self-hosted  
@@ -45,7 +44,6 @@ jobs:
       
   Win64Build:
     env: 
-      PROJECT_PATH: /ProjectFolder  
       UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe
     needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
@@ -57,7 +55,6 @@ jobs:
                         
   NSBuild:
     env: 
-      PROJECT_PATH: /ProjectFolder  
       UNITY_PATH: C:\Program Files\Unity\Editor\Unity.exe    
     needs: [RemoveOldBuilds, UnityTest]
     runs-on: self-hosted
