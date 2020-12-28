@@ -264,7 +264,7 @@ Set-ExecutionPolicy RemoteSigned
 ### 設定檢查清單
 - ✅ Unity環境安裝
     - ✅ 在本地安裝 指定版本Unity Editor
-    - ✅ Switch 擴充安裝 (如果有Switch Build)
+    - ✅ Switch Unity擴充安裝 (如果有Switch Build)
 - ✅ Unity Build Script 製作與測試
     - ✅ 建立Unity Build Script - Windows
     - ✅ BuildScript測試 - Windows
