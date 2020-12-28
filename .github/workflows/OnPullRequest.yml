@@ -67,6 +67,18 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK}}
           status: Failure    
+          
+  Atomerge:
+    needs: [UnityTest, Win64Build, NSBuild]
+    runs-on: ubuntu-latest
+    steps:
+      - name: automerge
+        uses: "pascalgn/automerge-action@v0.13.0"
+        env:
+          GITHUB_TOKEN: "${{ secrets.MY_TOKEN }}"
+          MERGE_LABELS: ""
+          UPDATE_LABELS: ""
+
   
 
 
