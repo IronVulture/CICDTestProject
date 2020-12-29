@@ -101,6 +101,13 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
 - ✅ [Release Drafter 設定](#release-drafter)
     - ✅ 建立並設定 `release-drafter.yml`
     - ✅ Pull Reqeust Label設定
+- ✅ [IL2CPP](#unity-il2cpp-)
+    - ✅ 安裝Windows 10 SDK
+    - ✅ 安裝IL2CCP Unity擴充
+    - ✅ 從Unity Hub安裝Visual Studio
+    
+        
+
 
 --------------------------------------------------------------------------------------------
 
@@ -291,6 +298,9 @@ Set-ExecutionPolicy RemoteSigned
 
 -----------------------------------------------------------------------------
 
+### Unity IL2CPP 設定
+
+--------------------------------------------------------------------------------------------
 
 ## 參考
 [GitHub Actions のセルフホストランナーで Unity ビルドする](https://framesynthesis.jp/tech/github/actions-unity/)
