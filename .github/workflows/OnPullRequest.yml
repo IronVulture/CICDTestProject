@@ -57,7 +57,9 @@ jobs:
       shell: cmd
       run: |
         ${{secrets.UNITY_PATH}}  -quit -batchmode -projectPath .   -buildTarget Switch  -nographics  -executeMethod CI.SwitchBuild -logFile -          
-    
+      env: 
+        NINTENDO_SDK_ROOT: ${{ secrets.NINTENDO_SDK_ROOT}}
+            
   DiscordNotify_Fail:
     needs: [UnityTest, Win64Build, NSBuild] 
     runs-on: ubuntu-latest     
