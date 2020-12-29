@@ -97,6 +97,8 @@ Linux外的虛擬機的費用是非常高的(Windows兩倍、MacOS10倍)，
     - ✅ [STEAMUSERNAME](#deployyml) : steamcmd使用的帳號
     - ✅ [STEAMPASSWORD](#deployyml) : steamcmd使用的密碼
     - ✅ [DISCORD_WEBHOOK](#discord-webhook) : 指定Discord通知頻道的Webhook
+    - ✅ [NINTENDO_SDK_ROOT]: Switch build需要設定
+
 - ✅ [Pull Request Require Check設定](#pull-request-require-check)
 - ✅ [Release Drafter 設定](#release-drafter)
     - ✅ 建立並設定 `release-drafter.yml`
