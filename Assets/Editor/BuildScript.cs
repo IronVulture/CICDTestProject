@@ -17,7 +17,8 @@ public class CI
 
 #if UNITY_EDITOR
         // Build player.
-        BuildPipeline.BuildPlayer(ScenePaths, "NSbuilds/TestProject", BuildTarget.Switch, BuildOptions.Development);
+        EditorUserBuildSettings.switchCreateRomFile = true;
+        BuildPipeline.BuildPlayer(ScenePaths, "NSbuilds/TestProject", BuildTarget.Switch, BuildOptions.N);
 #endif
     }
 
