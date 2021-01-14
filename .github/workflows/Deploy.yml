@@ -9,11 +9,36 @@ jobs:
   UpdateReleaseDraft:
     runs-on: Ubuntu-latest
     steps:
-      - id: step1
+      - name: Create Note
+        id: CreateNote
         uses: release-drafter/release-drafter@v5.12.1
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.create_note.outputs.tag_name }} 
+          release_name: ${{ steps.create_note.outputs.name }} 
+          body: ${{ steps.create_note.outputs.body }}
+          draft: false
+          prerelease: false
+      - name: send discord msg
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          username: ReleaseNoter
+          color: '#ff00aa'
+          description: ${{ steps.create_note.outputs.body }}
+          text: ${{ steps.create_note.outputs.name }} 
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      
   SteamDeploy:
     runs-on: self-hosted
     steps:
@@ -32,3 +57,9 @@ jobs:
         if: always()
         with:
           webhook: ${{secrets.DISCORD_WEBHOOK}}
+
+
+  Release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
