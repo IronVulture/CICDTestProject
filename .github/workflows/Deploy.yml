@@ -59,7 +59,4 @@ jobs:
           webhook: ${{secrets.DISCORD_WEBHOOK}}
 
 
-  Release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
+
